@@ -21,7 +21,7 @@ defmodule SolarTest do
   end
 
   test "calculate the power of each flare", %{data: flares} do
-    assert Solar.power(flares |> List.first) == 99000
+    assert Solar.power(Enum.at(flares, 0)) == 99000
     assert Solar.power(Enum.at(flares, 1)) == 58
     assert Solar.power(Enum.at(flares, 3)) == 3.2
   end
@@ -33,5 +33,23 @@ defmodule SolarTest do
 
   test "deadliest flare", %{data: flares} do
     assert Solar.deadliest(flares) == 99000
+  end
+
+  test "total flare power", %{data: flares} do
+    assert Solar.total_flare_power(flares) == 216911.7
+  end
+
+  test "a list of flares", %{data: flares} do
+    result = Solar.flare_list(flares)
+    assert result == [
+      %{power: 99000, is_deadly: true},
+      %{power: 58.0,  is_deadly: false},
+      %{power: 12.0,  is_deadly: false},
+      %{power: 3.2,   is_deadly: false},
+      %{power: 836.0, is_deadly: false},
+      %{power: 2.5,   is_deadly: false},
+      %{power: 72000, is_deadly: true},
+      %{power: 45000, is_deadly: true}
+    ]
   end
 end
